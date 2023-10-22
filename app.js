@@ -1,54 +1,46 @@
 //Select HTML elements by their IDs and classes.
-const input = document.querySelector('#fruit'); // Get the input field.
-const suggestions = document.querySelector('.suggestions ul'); // Get the suggestions list.
+const input = document.querySelector('#fruit'); // The first element is the ID of '#fruit', it is the input field where users type fruit names. 
+const suggestions = document.querySelector('.suggestions ul'); // Get the class of '.suggestions ul', is a list to display matching suggestions.
 
 // Create an array of fruit names.
-const fruit = [
-    'Apple 🍎', 'Apricot', 'Avocado 🥑', 'Banana 🍌', 'Bilberry', 'Blackberry', 'Blackcurrant', 'Blueberry', 
-    'Boysenberry', 'Currant', 'Cherry 🍒', 'Coconut 🥥', 'Cranberry', 'Cucumber 🥒', 'Custard apple', 'Damson', 
-    'Date', 'Dragonfruit', 'Durian', 'Elderberry', 'Feijoa', 'Fig', 'Gooseberry', 'Grape 🍇', 'Raisin', 
-    'Grapefruit', 'Guava', 'Honeyberry', 'Huckleberry', 'Jabuticaba', 'Jackfruit', 'Jambul', 
-    'Juniper berry', 'Kiwifruit 🥝', 'Kumquat', 'Lemon 🍋', 'Lime', 'Loquat', 'Longan', 'Lychee', 'Mango 🥭', 
-    'Mangosteen', 'Marionberry', 'Melon 🍈', 'Cantaloupe', 'Honeydew', 'Watermelon 🍉', 'Miracle fruit', 
-    'Mulberry', 'Nectarine', 'Nance', 'Olive', 'Orange 🍊', 'Clementine', 'Mandarine', 'Tangerine', 
-    'Papaya', 'Passionfruit', 'Peach 🍑', 'Pear 🍐', 'Persimmon', 'Plantain', 'Plum', 'Pineapple 🍍', 
-    'Pomegranate', 'Pomelo', 'Quince', 'Raspberry', 'Salmonberry', 'Rambutan', 'Redcurrant', 
-    'Salak', 'Satsuma', 'Soursop', 'Star fruit', 'Strawberry 🍓', 'Tamarillo', 'Tamarind', 'Yuzu'
+const fruitArr = [
+    'Apple 🍎', 'Apricot', 'Avocado 🥑', 'Banana 🍌', 'Bilberry', 'Blackberry', 'Blackcurrant', 'Blueberry', 'Boysenberry', 'Currant', 'Cherry 🍒', 'Coconut 🥥', 'Cranberry', 'Cucumber 🥒', 'Custard apple', 'Damson', 'Date', 'Dragonfruit', 'Durian', 'Elderberry', 'Feijoa', 'Fig', 'Gooseberry', 'Grape 🍇', 'Raisin', 'Grapefruit', 'Guava', 'Honeyberry', 'Huckleberry', 'Jabuticaba', 'Jackfruit', 'Jambul', 'Juniper berry', 'Kiwifruit 🥝', 'Kumquat', 'Lemon 🍋', 'Lime', 'Loquat', 'Longan', 'Lychee', 'Mango 🥭', 'Mangosteen', 'Marionberry', 'Melon 🍈', 'Cantaloupe', 'Honeydew', 'Watermelon 🍉', 'Miracle fruit', 'Mulberry', 'Nectarine', 'Nance', 'Olive', 'Orange 🍊', 'Clementine', 'Mandarine', 'Tangerine', 'Papaya', 'Passionfruit', 'Peach 🍑', 'Pear 🍐', 'Persimmon', 'Plantain', 'Plum', 'Pineapple 🍍', 'Pomegranate', 'Pomelo', 'Quince', 'Raspberry', 'Salmonberry', 'Rambutan', 'Redcurrant', 'Salak', 'Satsuma', 'Soursop', 'Star fruit', 'Strawberry 🍓', 'Tamarillo', 'Tamarind', 'Yuzu'
 ];
 
-// Define the search function.
+// Define the search function and takes a string as an argument.
 function search(str) {
-    let results = []; // Initialize an empty array to store matching fruit names.
-    const fruitName = str.toLowerCase(); // Convert user input to lowercase for a case-insensitive search.
+    let resultsArr = []; // Initialize an empty array to store matching fruit names.
+    const inputVal = str.toLowerCase(); // Convert user input to lowercase for a case-insensitive search.
 
     // Loop through the fruit array.
-    for (i = 0; i < fruit.length; i++) {
+    for (i = 0; i < fruitArr.length; i++) {
         // Check if the lowercase version of the fruit name includes the lowercase input.
-        if (fruit[i].toLowerCase().includes(fruitName)) {
-            results.push(fruit[i]); // Add matching fruit names to the results array.
+        if (fruitArr[i].toLowerCase().includes(inputVal)) {
+            resultsArr.push(fruitArr[i]); // Add matching fruit names to the results array.
         }
     }
-    return results; // Return the array of matching results.
+    return resultsArr; // Return the array of matching results.
+    //const resultsArr = fruitArr.filter(fruit => fruit.toLowerCase().includes(inputVal)); //One liner for the above loop.
 }
 
-// Define the search handler function.
+// Define the search handler function. It handles user input.
 function searchHandler(e) {
     const inputVal = e.currentTarget.value; // Get the user's current input.
-    let results = []; // Initialize an empty array to store matching results.
+    let resultsArr = []; // Initialize an empty array to store matching results.
 
     if (inputVal.length > 0) { // Check if there's input.
-        results = search(inputVal); // Call the search function to find matching fruit names.
+        resultsArr = search(inputVal); // Call the search function to find matching fruit names.
     }
-    showSuggestions(results, inputVal); // Display matching suggestions based on results.
+    showSuggestions(resultsArr, inputVal); // Display matching suggestions based on results.
 }
 
 //Define the function to display suggestions.
-function showSuggestions(results, inputVal) {
-    if (results.length > 0) { // Check if there are matching results.
+function showSuggestions(resultsArr, inputVal) {
+    if (resultsArr.length > 0) { // Check if there are matching results.
         suggestions.innerHTML = ''; // Clear any previous suggestions.
         suggestions.classList.add('has-suggestions'); // Add the 'has-suggestions' class for styling.
 
-        results.forEach(item => {
+        resultsArr.forEach(item => {
             // Highlight matching text using the <strong> element.
             const highlightedItem = item.replace(new RegExp(inputVal, 'gi'), match => `<strong>${match}</strong>`);
             const listItem = document.createElement('li'); // Create an <li> element for each suggestion.
@@ -57,7 +49,7 @@ function showSuggestions(results, inputVal) {
             suggestions.appendChild(listItem); // Append the suggestion to the list.
         });
     } else { // No matching results.
-        results = [];
+        resultsArr = []; //Makes an empty array
         suggestions.innerHTML = ''; // Clear any existing suggestions.
         suggestions.classList.remove('has-suggestions'); // Remove the 'has-suggestions' class.
     }
